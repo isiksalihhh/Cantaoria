@@ -1,8 +1,8 @@
-﻿using Cantaoria.Domain.Entities.Common;
+﻿using Cantaoria.Domain.Entities;
 
-namespace Cantaoria.Domain.Entities
+namespace Cantaoria.Application.Models.Requests.OrderRequests
 {
-    public  class Order : BaseEntity
+    public class CreateOrderRequest
     {
         public string CustomerID { get; set; }
         public string Description { get; set; }
