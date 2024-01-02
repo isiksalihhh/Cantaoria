@@ -39,9 +39,9 @@ namespace Cantaoria.Persistence.Repositories
             return true;
         }
 
-        public async Task<bool> DeleteAsync(string id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            T model = Table.FirstOrDefault(data=>data.ID == Guid.Parse(id));
+            T model = Table.FirstOrDefault(data=>data.ID == id);
             return Delete(model);
         }
 

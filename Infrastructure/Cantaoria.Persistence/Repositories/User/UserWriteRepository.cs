@@ -10,6 +10,4 @@ namespace Cantaoria.Persistence.Repositories
         {
         }
     }
-    {
-    }
 }

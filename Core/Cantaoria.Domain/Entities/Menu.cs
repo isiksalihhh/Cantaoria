@@ -8,7 +8,7 @@ namespace Cantaoria.Domain.Entities
         public string URL { get; set; }
         public int? ParentID { get; set; }
         public int Order{ get; set; }
-        public string CategoryID { get; set; }
+        public int CategoryID { get; set; }
         public Category Category { get; set; }
     }
 }

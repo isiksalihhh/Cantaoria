@@ -9,7 +9,7 @@ namespace Cantaoria.Domain.Entities
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         public ICollection<Order> Orders { get; set; }
-        public string CategoryID { get; set; }
+        public int CategoryID { get; set; }
         public Category Category { get; set; }
 
     }
