@@ -27,11 +27,19 @@ namespace Cantaoria.Persistence.Concrete
                 
             foreach (var data in datas)
             {
-                _ = data.State switch
+                switch (data.State)
                 {
-                    EntityState.Added => data.Entity.CreatedDate = DateTime.Now,
-                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.Now
-                };
+                    case EntityState.Added:
+                        data.Entity.CreatedDate = DateTime.Now;
+                        break;
+                    case EntityState.Modified:
+                        data.Entity.UpdatedDate = DateTime.Now;
+                        break;
+                    case EntityState.Deleted:
+                        break;
+                    default:
+                        break;
+                }
             }
 
             return base.SaveChangesAsync(cancellationToken);

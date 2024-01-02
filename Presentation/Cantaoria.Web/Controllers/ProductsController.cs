@@ -1,4 +1,6 @@
-﻿using Cantaoria.Application.Repositories;
+﻿using AvvaMobile.Core.AWS;
+using Cantaoria.Application.Repositories;
+using Cantaoria.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cantaoria.Web.Controllers
@@ -20,8 +22,19 @@ namespace Cantaoria.Web.Controllers
         }
         public  IActionResult List()
         {
-
             return View();
+        }
+        public IActionResult ListAllData()
+        {
+
+            var result = _productReadRepository.GetAll().ToList();
+            return Json(result);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productWriteRepository.DeleteAsync(id);
+            await _productWriteRepository.SaveAsync();
+            return RedirectToAction(nameof(List));
         }
     }
 }
