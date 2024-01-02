@@ -7,9 +7,9 @@ namespace Cantaoria.Persistence
     public class BaseService
     {
         protected IHttpContextAccessor _httpContext;
-        public BaseService(IHttpContextAccessor httpContextAccessor)
+        public BaseService(IHttpContextAccessor httpContext)
         {
-            _httpContext = httpContextAccessor;
+            _httpContext = httpContext;
         }
         public bool CurrentUserAuthenticated
         {

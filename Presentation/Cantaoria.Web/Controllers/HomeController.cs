@@ -17,8 +17,12 @@ namespace Cantaoria.Web.Controllers
         {
             return View();
         }
+        public IActionResult Error404()
+        {
+            return View();
+        }
 
-        public IActionResult Privacy()
+        public IActionResult Error500()
         {
             return View();
         }

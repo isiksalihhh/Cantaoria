@@ -2,30 +2,29 @@
 using AvvaMobile.Core.Business;
 using AvvaMobile.Core.Extensions;
 using AvvaMobile.Core.Utilities.Mail;
-using Cantaoria.Application.Interfaces;
 using Cantaoria.Application.Models.Requests.LoginRequests;
 using Cantaoria.Application.Repositories;
 using Cantaoria.Persistence;
-using Cantaoria.Persistence.Concrete;
+using Cantaoria.Persistence.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
-namespace Cantaoria.Application.Services
+namespace Cantaoria.Persistence.Services
 {
     public class LoginService : BaseService, ILoginService
     {
-        private readonly IMailService _mailService;
+        //private readonly IMailService _mailService;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IRoleReadRepository _roleReadRepository;
-        public LoginService(HttpContextAccessor httpContextAccessor, IMailService mailService, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository , IRoleReadRepository roleReadRepository) : base(httpContextAccessor)
+        public LoginService(IHttpContextAccessor httpContext,/* IMailService mailService*/ IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IRoleReadRepository roleReadRepository) : base(httpContext)
         {
-            _mailService = mailService;
+            //_mailService = mailService;
             _roleReadRepository = roleReadRepository;
-            _userReadRepository =  userReadRepository;
-            _userWriteRepository =  userWriteRepository;
+            _userReadRepository = userReadRepository;
+            _userWriteRepository = userWriteRepository;
         }
 
         public async Task<ServiceResult> ForgotPassword(ForgotPasswordRequest request)
@@ -53,17 +52,17 @@ namespace Cantaoria.Application.Services
                 { "[Password]", user.Password },
             };
 
-            var emailResult = await _mailService.Send(
-                user.Email,
-                "Yeni Şifreniz Kullanıma Hazır",
-                "PasswordUpdated",
-                emailParameters);
+            //var emailResult = await _mailService.Send(
+            //    user.Email,
+            //    "Yeni Şifreniz Kullanıma Hazır",
+            //    "PasswordUpdated",
+            //    emailParameters);
 
-            if (!emailResult.IsSuccess)
-            {
-                result.SetError(emailResult.Message);
-                return result;
-            }
+            //if (!emailResult.IsSuccess)
+            //{
+            //    result.SetError(emailResult.Message);
+            //    return result;
+            //}
 
             result.SetSuccess("Şifre için email gönderilmiştir.");
             return result;

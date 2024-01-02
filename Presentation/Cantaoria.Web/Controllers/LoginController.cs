@@ -1,5 +1,5 @@
 ﻿using AvvaMobile.Core;
-using Cantaoria.Application.Interfaces;
+using Cantaoria.Persistence.Interfaces;
 using Cantaoria.Application.Models.Requests.LoginRequests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace Cantaoria.Web.Controllers
         [AllowAnonymous]
         public IActionResult SignIn()
         {
-            return View("SignIn2");
+            return View("SignIn");
         }
         [AllowAnonymous]
         [HttpPost]
@@ -30,13 +30,13 @@ namespace Cantaoria.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
             Message(result);
-            return View("SignIn2");
+            return View("SignIn");
         }
 
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View("ForgotPassword2");
+            return View("ForgotPassword");
         }
 
         [AllowAnonymous]
@@ -45,7 +45,7 @@ namespace Cantaoria.Web.Controllers
         {
             var result = await _loginService.ForgotPassword(request);
             Message(result);
-            return View("ForgotPassword2");
+            return View("ForgotPassword");
         }
 
         [AllowAnonymous]

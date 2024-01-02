@@ -1,15 +1,18 @@
 using Cantaoria.Persistence;
 using Cantaoria.Persistence.Concrete;
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-builder.Services.AddPersistenceServices();
-
-builder.Services.AddDbContext<CantaoriaDbContext>(options => {
+builder.Services.AddDbContext<CantaoriaDbContext>(options =>
+{
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
 });
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddPersistenceServices();
 
 var app = builder.Build();
 
@@ -24,7 +27,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
