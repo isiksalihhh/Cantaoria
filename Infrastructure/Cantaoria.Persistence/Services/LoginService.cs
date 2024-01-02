@@ -4,6 +4,7 @@ using AvvaMobile.Core.Extensions;
 using AvvaMobile.Core.Utilities.Mail;
 using Cantaoria.Application.Interfaces;
 using Cantaoria.Application.Models.Requests.LoginRequests;
+using Cantaoria.Application.Repositories;
 using Cantaoria.Persistence;
 using Cantaoria.Persistence.Concrete;
 using Microsoft.AspNetCore.Authentication;
@@ -16,16 +17,22 @@ namespace Cantaoria.Application.Services
     public class LoginService : BaseService, ILoginService
     {
         private readonly IMailService _mailService;
-        public LoginService(CantaoriaDbContext context, HttpContextAccessor httpContextAccessor, IMailService mailService) : base(context, httpContextAccessor)
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly IUserWriteRepository _userWriteRepository;
+        private readonly IRoleReadRepository _roleReadRepository;
+        public LoginService(HttpContextAccessor httpContextAccessor, IMailService mailService, IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository , IRoleReadRepository roleReadRepository) : base(httpContextAccessor)
         {
             _mailService = mailService;
+            _roleReadRepository = roleReadRepository;
+            _userReadRepository =  userReadRepository;
+            _userWriteRepository =  userWriteRepository;
         }
 
         public async Task<ServiceResult> ForgotPassword(ForgotPasswordRequest request)
         {
             var result = new ServiceResult();
 
-            var user = _context.Users.Where(x => x.Email == request.Email.Trim()).FirstOrDefault();
+            var user = _userReadRepository.GetWhere(x => x.Email == request.Email.Trim()).FirstOrDefault();
 
             if (user is null)
             {
@@ -34,8 +41,8 @@ namespace Cantaoria.Application.Services
             }
 
             user.Password = KeyGenerator.CreateRandomPassword(6);
-            _context.Update(user);
-            await _context.SaveChangesAsync();
+            _userWriteRepository.Update(user);
+            await _userWriteRepository.SaveAsync();
 
             var emailParameters = new Dictionary<string, string>
             {
@@ -67,8 +74,8 @@ namespace Cantaoria.Application.Services
         {
             var result = new ServiceResult<UpdateProfileRequest>();
 
-            var user = await (from u in _context.Users
-                              join r in _context.Roles on u.RoleID equals r.ID
+            var user = await (from u in _userReadRepository.GetAll()
+                              join r in _roleReadRepository.GetAll() on u.RoleID equals r.ID
                               where u.ID == CurrentUserID
                               select new UpdateProfileRequest
                               {
@@ -95,7 +102,7 @@ namespace Cantaoria.Application.Services
         {
             var result = new ServiceResult();
 
-            var user = _context.Users.Where(x => x.Email == request.Email.Trim() && x.Password == request.Password).FirstOrDefault();
+            var user = _userReadRepository.GetWhere(x => x.Email == request.Email.Trim() && x.Password == request.Password).FirstOrDefault();
 
             if (user is null)
             {
@@ -103,7 +110,7 @@ namespace Cantaoria.Application.Services
                 return result;
             }
 
-            var userRole = _context.Roles.Where(x => x.ID == user.RoleID).Select(x => x.Name).FirstOrDefault();
+            var userRole = _roleReadRepository.GetWhere(x => x.ID == user.RoleID).Select(x => x.Name).FirstOrDefault();
 
             var claims = new List<Claim>
             {
@@ -141,7 +148,7 @@ namespace Cantaoria.Application.Services
         {
             var result = new ServiceResult();
 
-            var user = _context.Users.Where(x => x.ID == request.ID).FirstOrDefault();
+            var user = _userReadRepository.GetWhere(x => x.ID == request.ID).FirstOrDefault();
 
             if (user is null)
             {
@@ -153,8 +160,8 @@ namespace Cantaoria.Application.Services
             user.LastName = request.LastName;
             user.Email = request.Email;
             user.Phone = request.Phone;
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            _userWriteRepository.Update(user);
+            await _userWriteRepository.SaveAsync();
 
             result.SetSuccess("Profiliniz güncellenmiştir.");
             return result;

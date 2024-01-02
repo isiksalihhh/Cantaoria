@@ -1,6 +1,4 @@
-﻿using Cantaoria.Persistence.Concrete;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.AspNetCore.Http;
 using System.Runtime.CompilerServices;
 using System.Security.Claims;
 
@@ -8,12 +6,10 @@ namespace Cantaoria.Persistence
 {
     public class BaseService
     {
-        protected CantaoriaDbContext _context;
         protected IHttpContextAccessor _httpContext;
-        public BaseService(CantaoriaDbContext context, IHttpContextAccessor httpContextAccessor)
+        public BaseService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContext = httpContextAccessor;
-            _context = context;
         }
         public bool CurrentUserAuthenticated
         {

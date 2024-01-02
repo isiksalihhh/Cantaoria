@@ -12,7 +12,7 @@ namespace Cantaoria.Web.Controllers
 
         public LoginController(ILoginService loginService)
         {
-            loginService = _loginService;
+            _loginService = loginService;
         }
 
         [AllowAnonymous]

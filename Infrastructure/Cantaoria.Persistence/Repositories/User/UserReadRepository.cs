@@ -9,9 +9,5 @@ namespace Cantaoria.Persistence.Repositories
         public UserReadRepository(CantaoriaDbContext context) : base(context)
         {
         }
-       public async Task<User> GetByEmail(string email)
-        {
-           return await GetSingleAsync(x => x.Email == email);
-       }
     }
 }
