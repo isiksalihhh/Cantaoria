@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Cantaoria.Domain\Cantaoria.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Responses\" />
+  </ItemGroup>
+
 </Project>

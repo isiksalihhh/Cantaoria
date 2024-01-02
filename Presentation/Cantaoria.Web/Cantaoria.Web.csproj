@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Cantaoria.API.Application\Cantaoria.Application.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\Cantaoria.Infrastructure\Cantaoria.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Cantaoria.Persistence\Cantaoria.Persistence.csproj" />
   </ItemGroup>
 

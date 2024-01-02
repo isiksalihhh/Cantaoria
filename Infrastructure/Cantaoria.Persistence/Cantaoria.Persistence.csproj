@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AvvaMobile.Core" Version="1.0.110" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -23,6 +24,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Cantaoria.API.Application\Cantaoria.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UnitOfWorks\" />
   </ItemGroup>
 
 </Project>
