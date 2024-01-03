@@ -20,7 +20,7 @@ namespace Cantaoria.Persistence.Services
             _productWriteRepository = productWriteRepository;
         }
 
-        public ServiceResult<CreateProductRequest> Create()
+        public async Task<ServiceResult<CreateProductRequest>> Create()
         {
             var result = new ServiceResult<CreateProductRequest>();
 

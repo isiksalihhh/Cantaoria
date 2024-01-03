@@ -1,15 +1,13 @@
 ﻿using AvvaMobile.Core;
-using AvvaMobile.Core.AWS;
 using Cantaoria.Application.Models.Requests.ProductRequests;
 using Cantaoria.Application.Repositories;
-using Cantaoria.Domain.Entities;
 using Cantaoria.Persistence.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cantaoria.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Yönetici")]
     public class ProductController : BaseController
     {
         private readonly IProductReadRepository _productReadRepository;
@@ -19,8 +17,8 @@ namespace Cantaoria.Web.Controllers
             _productService = productService;
             _productReadRepository = productReadRepository;
         }
- 
-        public  IActionResult List()
+
+        public IActionResult List()
         {
             return View();
         }
@@ -30,9 +28,9 @@ namespace Cantaoria.Web.Controllers
             var result = _productReadRepository.GetAll().ToList();
             return Json(result);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var result = _productService.Create();
+            var result = await _productService.Create();
             return View(result.Data);
         }
 

@@ -1,10 +1,10 @@
 ﻿using AvvaMobile.Core.Business;
-using Cantaoria.Application.Models.Responses.OrderResponses;
+using Cantaoria.Application.Models.Responses.CustomerResponses;
 
 namespace Cantaoria.Persistence.Interfaces
 {
-    public interface IOrderService
+    public interface ICustomerService
     {
-        Task<ServiceResult<List<OrderResponse>>> ListAllData();
+        Task<ServiceResult<List<CustomerResponse>>> ListAllData();
     }
 }

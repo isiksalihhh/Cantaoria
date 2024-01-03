@@ -12,7 +12,7 @@ function populateTable(data) {
                         <td>${formatDateTimeToNormalDate(item.orderDate)}</td>
                         <td>${item.totalAmount}</td>
                         <td>` +
-            (item.isEnabled == true ? `<span class="badge badge-success">Aktif</span>` : `<span class="badge badge-danger">Pasif</span>`)
+            (item.isEnabled == true ? `<span class="badge badge-success p-2">Aktif</span>` : `<span class="badge badge-danger p-2">Pasif</span>`)
             + `</td>
 
                     <td>
@@ -21,11 +21,7 @@ function populateTable(data) {
                                 <i class="fa-solid fa-pen"></i>
                              </span>
                         </a>
-                        <a class="btn btn-danger btn-icon-split" href="/Order/Delete/${item.id}">  
-                            <span class="icon text-white-50">
-                                <i class="fas fa-trash"></i>
-                            </span>
-                        </a>
+
                     </td>
                     `;
         dataTableBody.appendChild(row);

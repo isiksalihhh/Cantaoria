@@ -5,8 +5,14 @@
 <div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Müşteri</h6>
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+            <h6 class="m-0 font-weight-bold text-primary">Kullanıcılar</h6>
+            <a href="/User/Create" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+                <span class="text">Yeni Kullanıcı</span>
+            </a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -18,7 +24,9 @@
                             <th>Soyadı</th>
                             <th>Email</th>
                             <th>Telefon No</th>
+                            <th>Rol Adı</th>
                             <th>Durum</th>
+                            <th>İşlemler</th>
                         </tr>
                     </thead>
 
@@ -32,4 +40,4 @@
 
 </div>
 <script src="~/Scripts/Tools/Tools.js"></script>
-<script src="~/Scripts/Customer/List.js"></script>
+<script src="~/Scripts/User/List.js"></script>

@@ -11,11 +11,11 @@
                         <td>${item.price}</td>
                         <td>${item.stockQuantity}</td>
                         <td>` +
-                            (item.isEnabled == true ? `<span class="badge badge-success">Aktif</span>` : `<span class="badge badge-danger">Pasif</span>`)
+                (item.isEnabled == true ? `<span class="badge badge-success p-2">Aktif</span>` : `<span class="badge badge-danger p-2">Pasif</span>`)
                         + `</td>
 
                     <td>
-                        <a class="btn btn-info btn-icon-split" href="/Product/Update/${item.id}" >
+                        <a class="btn btn-primary mr-2 btn-icon-split" href="/Product/Update/${item.id}" >
                              <span class="icon text-white-50">
                                 <i class="fa-solid fa-pen"></i>
                              </span>

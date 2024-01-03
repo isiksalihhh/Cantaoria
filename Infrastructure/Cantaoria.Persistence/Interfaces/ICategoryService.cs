@@ -5,7 +5,7 @@ namespace Cantaoria.Persistence.Interfaces
 {
     public interface ICategoryService
     {
-        ServiceResult<CreateCategoryRequest> Create();
+        Task<ServiceResult<CreateCategoryRequest>> Create();
         Task<ServiceResult<CreateCategoryRequest>> CreateAsync(CreateCategoryRequest request);
         Task<ServiceResult<UpdateCategoryRequest>> Update(int id);
         Task<ServiceResult<UpdateCategoryRequest>> Update(UpdateCategoryRequest request);

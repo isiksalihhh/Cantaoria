@@ -18,7 +18,7 @@ namespace Cantaoria.Persistence.Services
             _roleWriteRepository = roleWriteRepository;
         }
 
-        public ServiceResult<CreateRoleRequest> Create()
+        public async Task<ServiceResult<CreateRoleRequest>> Create()
         {
             var result = new ServiceResult<CreateRoleRequest>();
             var createRole = new CreateRoleRequest();

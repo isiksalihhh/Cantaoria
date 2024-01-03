@@ -1,6 +1,7 @@
 ﻿using AvvaMobile.Core;
 using AvvaMobile.Core.Business;
 using AvvaMobile.Core.Extensions;
+using Cantaoria.Application.Models.Enums;
 using Cantaoria.Application.Models.Requests.LoginRequests;
 using Cantaoria.Application.Repositories;
 using Cantaoria.Domain.Entities;
@@ -18,15 +19,13 @@ namespace Cantaoria.Persistence.Services
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IRoleReadRepository _roleReadRepository;
-        private readonly ICustomerWriteRepository _customerWriteRepository;
 
-        public LoginService(IHttpContextAccessor httpContext,/* IMailService mailService*/ IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IRoleReadRepository roleReadRepository, ICustomerWriteRepository customerWriteRepository) : base(httpContext)
+        public LoginService(IHttpContextAccessor httpContext,/* IMailService mailService*/ IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IRoleReadRepository roleReadRepository) : base(httpContext)
         {
             //_mailService = mailService;
             _roleReadRepository = roleReadRepository;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
-            _customerWriteRepository = customerWriteRepository;
         }
 
         public async Task<ServiceResult> ForgotPassword(ForgotPasswordRequest request)
@@ -118,21 +117,12 @@ namespace Cantaoria.Persistence.Services
                 Email = request.Email,
                 Phone = request.Phone,
                 Password = request.Password,
-                RoleID = 4
+                RoleID = (int)RolesEnum.Customer,
             };
 
-            var newCustomer = new Customer
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                PhoneNumber = request.Phone,
-            };
 
             await _userWriteRepository.AddAsync(newUser);
-            await _customerWriteRepository.AddAsync(newCustomer);
             await _userWriteRepository.SaveAsync();
-            await _customerWriteRepository.SaveAsync();
 
             await SignIn(new LoginRequest
             {
@@ -165,8 +155,8 @@ namespace Cantaoria.Persistence.Services
                 new Claim(ClaimTypes.MobilePhone, user.Phone),
                 new Claim(ClaimTypes.Authentication, "true"),
                 new Claim("UserInitials", user.FullName.GetInitials()),
-                new Claim(ClaimTypes.Role, userRole)
-            };
+                new Claim(ClaimTypes.Role, userRole),
+        };
 
             var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "UserAuthentication"));
 

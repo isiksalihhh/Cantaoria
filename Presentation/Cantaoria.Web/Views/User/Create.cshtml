@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout="_Layout";
+}
+
+@model Cantaoria.Application.Models.Requests.UserRequests.CreateUserRequest
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Kullanıcı Oluştur</h6>
+        </div>
+        <div class="card-body">
+            <form asp-controller="User" asp-action="Create" id="productForm" method="post" enctype="multipart/form-data">
+               
+                    <div class="form-group">
+                        <label for="name">İsim:</label>
+                        <input asp-for="FirstName" type="text" class="form-control form-control-lg form-control-solid"  required>
+                    </div>
+                <div class="form-group">
+                    <label for="name">Soyisim:</label>
+                    <input asp-for="LastName" type="text" class="form-control form-control-lg form-control-solid" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Şifre:</label>
+                    <input asp-for="Password" type="text" class="form-control form-control-lg form-control-solid" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Email:</label>
+                    <input asp-for="Email" type="text" class="form-control form-control-lg form-control-solid" required>
+                </div>
+                <div class="form-group">
+                    <label for="name">Telefon No:</label>
+                    <input asp-for="Phone" type="number" class="form-control form-control-lg form-control-solid" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="menu">Rol:</label>
+                    <select asp-for="RoleID" asp-items="@Model.Role" class="form-select form-select-lg form-select-solid" required>
+                        <option value="" disabled selected>Seçiniz</option>
+                    </select>
+                </div>
+              
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a href="/User/List" class="btn btn-info ">Vazgeç</a>
+            </form>
+        </div>
+    </div>
+</div>

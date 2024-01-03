@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cantaoria.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Yönetici")]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cantaoria.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Yönetici")]
     public class CategoryController : BaseController
     {
         private readonly ICategoryReadRepository _categoryReadRepository;
@@ -27,9 +27,9 @@ namespace Cantaoria.Web.Controllers
             var result = _categoryReadRepository.GetAll().ToList();
             return Json(result);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var result = _categoryService.Create();
+            var result = await _categoryService.Create();
             return View(result.Data);
         }
 

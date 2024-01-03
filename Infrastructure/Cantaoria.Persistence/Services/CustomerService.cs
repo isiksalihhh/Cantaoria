@@ -1,40 +1,34 @@
 ﻿using AvvaMobile.Core.Business;
-using Cantaoria.Application.Models.Responses.OrderResponses;
+using Cantaoria.Application.Models.Responses.CustomerResponses;
 using Cantaoria.Application.Repositories;
 using Cantaoria.Persistence.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Cantaoria.Persistence.Services
 {
-    public class OrderService : BaseService, IOrderService
+    public class CustomerService : BaseService, ICustomerService
     {
-        private readonly ICustomerReadRepository _customerReadRepository;
-        private readonly IOrderReadRepository _orderReadRepository;
-        public OrderService(IHttpContextAccessor httpContext, ICustomerReadRepository customerReadRepository, IOrderReadRepository orderReadRepository) : base(httpContext)
+        private readonly IUserReadRepository _userReadRepository;
+        public CustomerService(IHttpContextAccessor httpContext, IUserReadRepository userReadRepository) : base(httpContext)
         {
-            _orderReadRepository = orderReadRepository;
-            _customerReadRepository = customerReadRepository;
+            _userReadRepository = userReadRepository;
         }
 
-        public async Task<ServiceResult<List<OrderResponse>>> ListAllData()
+        public async Task<ServiceResult<List<CustomerResponse>>> ListAllData()
         {
-            var result = new ServiceResult<List<OrderResponse>>();
+            var result = new ServiceResult<List<CustomerResponse>>();
 
-            var customer = _customerReadRepository.GetAll();
-
-            var orders = _orderReadRepository.GetAll().Select(x=> new OrderResponse
+            var customers = _userReadRepository.GetWhere(x=>x.RoleID == 4).Select(x => new CustomerResponse
             {
                 ID = x.ID,
-                Address = x.Address,
-                Description = x.Description,
-                OrderDate = x.OrderDate,
-                TotalAmount = x.TotalAmount,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Email = x.Email,
+                Phone = x.Phone,
                 IsEnabled = x.IsEnabled,
-                Name = customer.Where(c => c.ID == x.CustomerID).Select(c => $"{c.FirstName} {c.LastName}").FirstOrDefault()
-
             }).ToList();
 
-            result.Data = orders;
+            result.Data = customers;
 
             return result;
         }

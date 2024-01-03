@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Cantaoria.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Yönetici")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

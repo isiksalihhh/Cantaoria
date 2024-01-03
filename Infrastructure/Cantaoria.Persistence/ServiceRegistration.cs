@@ -45,6 +45,8 @@ namespace Cantaoria.Persistence
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IUserService, UserService>();
 
 
         }

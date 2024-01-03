@@ -1,10 +1,8 @@
 ﻿using AvvaMobile.Core.Business;
 using Cantaoria.Application.Models.Requests.CategoryRequests;
-using Cantaoria.Application.Models.Requests.ProductRequests;
 using Cantaoria.Application.Repositories;
 using Cantaoria.Domain.Entities;
 using Cantaoria.Persistence.Interfaces;
-using Cantaoria.Persistence.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -22,7 +20,7 @@ namespace Cantaoria.Persistence.Services
             _categoryWriteRepository = categoryWriteRepository;
         }
 
-        public ServiceResult<CreateCategoryRequest> Create()
+        public async Task<ServiceResult<CreateCategoryRequest>> Create()
         {
             var result = new ServiceResult<CreateCategoryRequest>();
 
