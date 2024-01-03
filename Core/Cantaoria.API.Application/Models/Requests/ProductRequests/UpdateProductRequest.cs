@@ -1,16 +1,18 @@
 ﻿using Cantaoria.Domain.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Cantaoria.Application.Models.Requests.ProductRequests
 {
     public class UpdateProductRequest
     {
-        public string ID { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
         //public ICollection<Order> Orders { get; set; }
         public string CategoryID { get; set; }
-        public Category Category { get; set; }
+        public bool IsEnabled { get; set; }
+        public List<SelectListItem> Category { get; set; }
     }
 }

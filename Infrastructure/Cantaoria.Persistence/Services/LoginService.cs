@@ -118,6 +118,7 @@ namespace Cantaoria.Persistence.Services
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.MobilePhone, user.Phone),
                 new Claim(ClaimTypes.Authentication, "true"),
+                new Claim("UserInitials", user.FullName.GetInitials()),
                 new Claim(ClaimTypes.Role, userRole)
             };
 

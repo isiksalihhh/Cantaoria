@@ -14,6 +14,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddPersistenceServices();
 
+#region Authentication
+builder.Services.AddAuthentication("UserAuthentication")
+    .AddCookie("UserAuthentication", options =>
+    {
+        options.LoginPath = new PathString("/Login/SignIn");
+        options.AccessDeniedPath = new PathString("/Login/Forbidden");
+    });
+#endregion
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

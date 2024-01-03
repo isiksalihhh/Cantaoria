@@ -19,6 +19,9 @@ namespace Cantaoria.Persistence.Concrete
         public DbSet<Category> Categories { get; set; }
 
 
+        public class MigrationsConfig
+        {
+        }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout="_Layout";
+}
+
+@model Cantaoria.Application.Models.Requests.ProductRequests.CreateProductRequest
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Ürün Oluştur</h6>
+        </div>
+        <div class="card-body">
+            <form asp-controller="Product" asp-action="Create" id="productForm" method="post" enctype="multipart/form-data">
+               
+                    <div class="form-group">
+                        <label for="name">Ürün Adı:</label>
+                        <input asp-for="Name" type="text" class="form-control form-control-lg form-control-solid" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Açıklama:</label>
+                        <textarea asp-for="Description" class="form-control form-control-lg form-control-solid" id="description" name="description" rows="3" required></textarea>
+                    </div>
+                
+
+                <div class="form-group">
+                    <label for="price">Fiyat:</label>
+                        <input asp-for="Price" type="number" class="form-control form-control-lg form-control-solid" id="price" name="price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="stockQuantity">Stok Miktarı:</label>
+                    <input asp-for="StockQuantity"  type="number" class="form-control form-control-lg form-control-solid" id="stockQuantity" name="stockQuantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="category">Kategori:</label>
+                    <select asp-for="CategoryID" asp-items="@Model.Category" class="form-select form-select-lg form-select-solid" required>
+                        <option value="" disabled selected>Seçiniz</option>
+                    </select>
+                </div>
+              
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                 <a href="/Product/List" class="btn btn-info ">Vazgeç</a>
+            </form>
+        </div>
+    </div>
+</div>

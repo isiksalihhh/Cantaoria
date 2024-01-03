@@ -8,19 +8,17 @@
                         <td>${item.id}</td>
                         <td>${item.name}</td>
                         <td>${item.description}</td>
-                        <td>${item.price}</td>
-                        <td>${item.stockQuantity}</td>
                         <td>` +
                             (item.isEnabled == true ? `<span class="badge badge-success">Aktif</span>` : `<span class="badge badge-danger">Pasif</span>`)
                         + `</td>
 
                     <td>
-                        <a class="btn btn-info btn-icon-split" href="/Product/Update/${item.id}" >
+                        <a class="btn btn-info btn-icon-split" href="/Category/Update/${item.id}" >
                              <span class="icon text-white-50">
                                 <i class="fa-solid fa-pen"></i>
                              </span>
                         </a>
-                        <a class="btn btn-danger btn-icon-split" href="/Product/Delete/${item.id}">  
+                        <a class="btn btn-danger btn-icon-split" href="/Category/Delete/${item.id}">  
                             <span class="icon text-white-50">
                                 <i class="fas fa-trash"></i>
                             </span>
@@ -31,4 +29,4 @@
         });
     }
 
-    getData('/Product/ListAllData', populateTable);
+    getData('/Category/ListAllData', populateTable);

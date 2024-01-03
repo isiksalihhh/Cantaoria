@@ -1,4 +1,4 @@
-﻿using Cantaoria.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Cantaoria.Application.Models.Requests.ProductRequests
 {
@@ -10,6 +10,7 @@ namespace Cantaoria.Application.Models.Requests.ProductRequests
         public int StockQuantity { get; set; }
         //public ICollection<Order> Orders { get; set; }
         public string CategoryID { get; set; }
-        public Category Category { get; set; }
+        public bool IsEnabled { get; set; }
+        public List<SelectListItem> Category { get; set; }
     }
 }

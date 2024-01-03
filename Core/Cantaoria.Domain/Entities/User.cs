@@ -10,5 +10,7 @@ namespace Cantaoria.Domain.Entities
         public string Email { get; set; }
         public string Phone { get; set;}
         public int RoleID { get; set; }
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 }
