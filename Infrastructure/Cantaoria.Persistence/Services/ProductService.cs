@@ -114,9 +114,17 @@ namespace Cantaoria.Persistence.Services
         {
             var result = new ServiceResult<UpdateProductRequest>();
 
-            var product = _productReadRepository.GetWhere(x => x.Name == request.Name && x.Description == request.Description).FirstOrDefault();
+            var product = _productReadRepository.GetWhere(x => x.ID == request.ID).FirstOrDefault();
 
             if (product == null)
+            {
+                result.SetError("Kayıt bulunmamaktadır.");
+                return result;
+            }
+
+            var isProductExist = _productReadRepository.GetWhere(x => x.Name == request.Name && x.Description == request.Description).Any();
+
+            if (isProductExist)
             {
                 result.SetError("Ürün bulunmaktadır.");
                 return result;

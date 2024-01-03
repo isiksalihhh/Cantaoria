@@ -1,10 +1,9 @@
 ﻿using AvvaMobile.Core;
 using AvvaMobile.Core.Business;
 using AvvaMobile.Core.Extensions;
-using AvvaMobile.Core.Utilities.Mail;
 using Cantaoria.Application.Models.Requests.LoginRequests;
 using Cantaoria.Application.Repositories;
-using Cantaoria.Persistence;
+using Cantaoria.Domain.Entities;
 using Cantaoria.Persistence.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -19,12 +18,15 @@ namespace Cantaoria.Persistence.Services
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IRoleReadRepository _roleReadRepository;
-        public LoginService(IHttpContextAccessor httpContext,/* IMailService mailService*/ IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IRoleReadRepository roleReadRepository) : base(httpContext)
+        private readonly ICustomerWriteRepository _customerWriteRepository;
+
+        public LoginService(IHttpContextAccessor httpContext,/* IMailService mailService*/ IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IRoleReadRepository roleReadRepository, ICustomerWriteRepository customerWriteRepository) : base(httpContext)
         {
             //_mailService = mailService;
             _roleReadRepository = roleReadRepository;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+            _customerWriteRepository = customerWriteRepository;
         }
 
         public async Task<ServiceResult> ForgotPassword(ForgotPasswordRequest request)
@@ -94,6 +96,50 @@ namespace Cantaoria.Persistence.Services
             }
 
             result.Data = user;
+            return result;
+        }
+
+        public async Task<ServiceResult> Register(RegisterRequest request)
+        {
+            var result = new ServiceResult();
+
+            var user = _userReadRepository.GetWhere(x => x.Email == request.Email.Trim()).FirstOrDefault();
+
+            if (user != null)
+            {
+                result.SetError("Bu email adresi ile kayıtlı kullanıcı bulunmaktadır.");
+                return result;
+            }
+
+            var newUser = new User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Phone = request.Phone,
+                Password = request.Password,
+                RoleID = 4
+            };
+
+            var newCustomer = new Customer
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                PhoneNumber = request.Phone,
+            };
+
+            await _userWriteRepository.AddAsync(newUser);
+            await _customerWriteRepository.AddAsync(newCustomer);
+            await _userWriteRepository.SaveAsync();
+            await _customerWriteRepository.SaveAsync();
+
+            await SignIn(new LoginRequest
+            {
+                Email = request.Email,
+                Password = request.Password
+            });
+
             return result;
         }
 

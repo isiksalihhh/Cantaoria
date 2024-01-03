@@ -1,21 +1,19 @@
 ﻿using AvvaMobile.Core;
-using Cantaoria.Application.Models.Requests.CategoryRequests;
+using Cantaoria.Application.Models.Requests.RoleRequests;
 using Cantaoria.Application.Repositories;
 using Cantaoria.Persistence.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cantaoria.Web.Controllers
 {
-    [Authorize]
-    public class CategoryController : BaseController
+    public class RoleController : BaseController
     {
-        private readonly ICategoryReadRepository _categoryReadRepository;
-        private readonly ICategoryService _categoryService;
-        public CategoryController(ICategoryReadRepository categoryReadRepository, ICategoryService categoryService)
+        private readonly IRoleReadRepository _roleReadRepository;
+        private readonly IRoleService _roleService;
+        public RoleController(IRoleReadRepository roleReadRepository, IRoleService roleService)
         {
-            _categoryService = categoryService;
-            _categoryReadRepository = categoryReadRepository;
+            _roleReadRepository = roleReadRepository;
+            _roleService = roleService;
         }
         public IActionResult List()
         {
@@ -24,19 +22,19 @@ namespace Cantaoria.Web.Controllers
 
         public IActionResult ListAllData()
         {
-            var result = _categoryReadRepository.GetAll().ToList();
+            var result = _roleReadRepository.GetAll().ToList();
             return Json(result);
         }
         public IActionResult Create()
         {
-            var result = _categoryService.Create();
+            var result = _roleService.Create();
             return View(result.Data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryRequest request)
+        public async Task<IActionResult> Create(CreateRoleRequest request)
         {
-            var result = await _categoryService.CreateAsync(request);
+            var result = await _roleService.CreateAsync(request);
             Message(result);
             if (!result.IsSuccess)
             {
@@ -46,7 +44,7 @@ namespace Cantaoria.Web.Controllers
         }
         public async Task<IActionResult> Update(int id)
         {
-            var result = await _categoryService.Update(id);
+            var result = await _roleService.Update(id);
             if (!result.IsSuccess)
             {
                 Message(result);
@@ -56,9 +54,9 @@ namespace Cantaoria.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(UpdateCategoryRequest request)
+        public async Task<IActionResult> Update(UpdateRoleRequest request)
         {
-            var result = await _categoryService.Update(request);
+            var result = await _roleService.Update(request);
             Message(result);
             if (!result.IsSuccess)
             {
@@ -69,7 +67,7 @@ namespace Cantaoria.Web.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _categoryService.DeleteAsync(id);
+            var result = await _roleService.DeleteAsync(id);
             return RedirectToAction(nameof(List));
         }
     }

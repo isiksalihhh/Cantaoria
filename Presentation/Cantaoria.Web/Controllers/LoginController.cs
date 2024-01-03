@@ -73,9 +73,23 @@ namespace Cantaoria.Web.Controllers
         {
             return View();
         }
+
+        [AllowAnonymous]
         public IActionResult Register()
         {
-            return View();
+            return View("Register");
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            var result = await _loginService.Register(request);
+            if (result.IsSuccess)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            Message(result);
+            return View("Register");
         }
     }
 }

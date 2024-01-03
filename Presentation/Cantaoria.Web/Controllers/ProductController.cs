@@ -73,7 +73,7 @@ namespace Cantaoria.Web.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _productService.DeleteAsync(id);
-            return Json(result);
+            return RedirectToAction(nameof(List));
         }
     }
 }

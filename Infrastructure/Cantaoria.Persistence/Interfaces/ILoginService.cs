@@ -10,5 +10,6 @@ namespace Cantaoria.Persistence.Interfaces
         Task<ServiceResult<UpdateProfileRequest>> GetProfile();
         Task<ServiceResult> UpdateProfile(UpdateProfileRequest request);
         Task<ServiceResult> ForgotPassword(ForgotPasswordRequest request);
+        Task<ServiceResult> Register(RegisterRequest request);
     }
 }
