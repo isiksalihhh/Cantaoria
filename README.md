@@ -1,3 +1,5 @@
+#WIP
+
 # E-Commerce Website with Onion Architecture and Generic Repository Pattern
 
 This project is an e-commerce website developed to enhance my skills and move forward in the .NET framework. The architecture follows the Onion Architecture pattern, and data access is implemented using the Generic Repository Pattern.
