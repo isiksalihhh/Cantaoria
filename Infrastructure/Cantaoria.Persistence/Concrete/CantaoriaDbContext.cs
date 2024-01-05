@@ -17,6 +17,7 @@ namespace Cantaoria.Persistence.Concrete
         public DbSet<Role> Roles { get; set; }
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductPhoto> ProductPhotos { get; set; }
 
 
         public class MigrationsConfig

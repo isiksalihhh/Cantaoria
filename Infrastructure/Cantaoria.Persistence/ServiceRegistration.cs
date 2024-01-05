@@ -37,6 +37,9 @@ namespace Cantaoria.Persistence
             services.AddScoped<IPermissionReadRepository, PermissionReadRepository>();
             services.AddScoped<IPermissionWriteRepository, PermissionWriteRepository>();
 
+            services.AddScoped<IProductPhotoReadRepository, ProductPhotoReadRepository>();
+            services.AddScoped<IProductPhotoWriteRepository, ProductPhotoWriteRepository>();
+
             //services.AddScoped<IMailService, MailManager>();
             //services.AddScoped<AvvaMobile.Core.Caching.AppSettingsKeys>();
 
@@ -48,6 +51,7 @@ namespace Cantaoria.Persistence
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IProductPhotoService, ProductPhotoService>();
 
 
         }

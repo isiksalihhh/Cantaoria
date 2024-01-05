@@ -1,5 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
+<script src="~/vendor/jquery/jquery.js"></script>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,17 +41,17 @@
     </a>
     <partial name="_LogoutModal"/>
 
-    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="~/vendor/jquery/jquery.min.js"></script>
-    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script src="~/js/sb-admin-2.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="~/vendor/chart.js/Chart.min.js"></script>
-    <script src="~/js/demo/chart-area-demo.js"></script>
-    <script src="~/js/demo/chart-pie-demo.js"></script>
-    <script src="~/js/site.js"></script>
     
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+<script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="~/js/sb-admin-2.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="~/vendor/chart.js/Chart.min.js"></script>
+<script src="~/js/demo/chart-area-demo.js"></script>
+<script src="~/js/demo/chart-pie-demo.js"></script>
+<script src="~/js/site.js"></script>
+
 </html>

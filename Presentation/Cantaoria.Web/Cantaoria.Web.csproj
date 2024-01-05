@@ -19,4 +19,8 @@
     <ProjectReference Include="..\..\Infrastructure\Cantaoria.Persistence\Cantaoria.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Temp\" />
+  </ItemGroup>
+
 </Project>
