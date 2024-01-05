@@ -47,7 +47,7 @@ namespace Cantaoria.Persistence.Services
         {
             var result = new ServiceResult<CreateProductRequest>();
 
-            var isProductExist = _productReadRepository.GetWhere(x => x.Name == request.Name && x.CategoryID == int.Parse(request.CategoryID)).Any();
+            var isProductExist = _productReadRepository.GetWhere(x => x.Name == request.Name && x.Description == request.Description && x.CategoryID == int.Parse(request.CategoryID)).Any();
 
             if (isProductExist)
             {
@@ -73,21 +73,21 @@ namespace Cantaoria.Persistence.Services
 
             var categoryName = _categoryReadRepository.GetWhere(x => x.ID == product.CategoryID).Select(x=>x.Name).FirstOrDefault();
 
-            var tempFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "Temp");
+            var tempFolderPath = Path.Combine("/Temp");
 
             var mainPhotoFileName = (request.MainPhoto != null) ? $"Main_{Guid.NewGuid()}_{categoryName}_{product.Name}_{request.MainPhoto.FileName}" : null;
 
-            for (int i = 0; i < request.OtherPhotos.Count; i++)
+            for (int i = 0; i < (request.OtherPhotos == null || request.OtherPhotos.Count == 0 ? 1 : request.OtherPhotos.Count); i++)
             {
                 var productPhoto = new ProductPhoto
                 {
                     ProductID = product.ID,
                     Product = product,
-                    MainPhoto = $"{tempFolderPath}\\{mainPhotoFileName}",
-
+                    MainPhoto = $"{tempFolderPath}/{mainPhotoFileName}",
                     IsEnabled = true,
                 };
                 await _productPhotoWriteRepository.AddAsync(productPhoto);
+
             }
 
             await _productPhotoWriteRepository.SaveAsync();
@@ -97,21 +97,23 @@ namespace Cantaoria.Persistence.Services
                 if (request.OtherPhotos != null && request.OtherPhotos.Any())
                 {
 
-                var productPhotos = _productPhotoReadRepository.GetWhere(x => x.ProductID == product.ID).ToList();
+                    var productPhotos = _productPhotoReadRepository.GetWhere(x => x.ProductID == product.ID).ToList();
 
-                for (int i = 0; i < request.OtherPhotos.Count; i++)
-                {
-                    var x = request.OtherPhotos[i];
+                    for (int i = 0; i < request.OtherPhotos.Count; i++)
+                    {
+                        var x = request.OtherPhotos[i];
 
-                    var productPhoto = productPhotos[i];
+                        var productPhoto = productPhotos[i];
 
-                    var otherPhotoFileName = $"Other_{Guid.NewGuid()}_{categoryName}_{product.Name}_{x.FileName}";
+                        var otherPhotoFileName = $"Other_{Guid.NewGuid()}_{categoryName}_{product.Name}_{x.FileName}";
 
-                    productPhoto.OtherPhoto = $"{tempFolderPath}\\{otherPhotoFileName}";
+                        productPhoto.OtherPhoto = $"{tempFolderPath}/{otherPhotoFileName}";
 
-                    _productPhotoWriteRepository.Update(productPhoto);
+                        _productPhotoWriteRepository.Update(productPhoto);
+
+                        CopyFileToTemp(x, otherPhotoFileName);
+                    }
                 }
-            }
 
             await _productPhotoWriteRepository.SaveAsync();
 
@@ -124,14 +126,19 @@ namespace Cantaoria.Persistence.Services
 
             var product =  _productReadRepository.GetWhere(x => x.ID == id).FirstOrDefault();
 
-            var productPhoto = _productPhotoReadRepository.GetWhere(x => x.ProductID == id).FirstOrDefault();
+            var productPhoto = _productPhotoReadRepository.GetWhere(x => x.ProductID == id).ToList();
 
             if (product == null)
             {
                 result.SetError("Kayıt bulunamadı.");
                 return result;
             }
-            _productPhotoWriteRepository.Delete(productPhoto);
+
+            if (productPhoto != null)
+            {
+                _productPhotoWriteRepository.DeleteRange(productPhoto);
+            }
+
             _productWriteRepository.Delete(product);
             await _productWriteRepository.SaveAsync();
             result.SetSuccess("Kayıt başarıyla silindi");
@@ -197,7 +204,7 @@ namespace Cantaoria.Persistence.Services
 
             var categoryName = _categoryReadRepository.GetWhere(x => x.ID == product.CategoryID).Select(x => x.Name).FirstOrDefault();
 
-            var tempFolderPath = Path.Combine(_hostingEnvironment.WebRootPath, "Temp");
+            var tempFolderPath = Path.Combine("/Temp");
 
             var mainPhotoFileName = (request.MainPhoto != null) ? $"Main_{Guid.NewGuid()}_{categoryName}_{product.Name}_{request.MainPhoto.FileName}" : null;
 
@@ -216,8 +223,8 @@ namespace Cantaoria.Persistence.Services
 
                 var otherPhotoFileName = $"Other_{Guid.NewGuid()}_{categoryName}_{product.Name}_{x.FileName}";
 
-                productPhoto.MainPhoto = $"{tempFolderPath}\\{mainPhotoFileName}";
-                productPhoto.OtherPhoto = $"{tempFolderPath}\\{otherPhotoFileName}";
+                productPhoto.MainPhoto = $"{tempFolderPath}/{mainPhotoFileName}";
+                productPhoto.OtherPhoto = $"{tempFolderPath}/{otherPhotoFileName}";
 
 
                 _productPhotoWriteRepository.Update(productPhoto);
@@ -234,7 +241,7 @@ namespace Cantaoria.Persistence.Services
         private void CopyFileToTemp(IFormFile file, string newFileName)
         {
             string webRootPath = _hostingEnvironment.WebRootPath;
-            string tempFolderPath = Path.Combine(webRootPath, "temp");
+            string tempFolderPath = Path.Combine(webRootPath, "Temp");
 
             if (!Directory.Exists(tempFolderPath))
             {

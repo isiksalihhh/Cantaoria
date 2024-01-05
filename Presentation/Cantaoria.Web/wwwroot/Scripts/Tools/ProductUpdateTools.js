@@ -65,10 +65,10 @@ $(document).ready(function () {
         });
     });
 
-    const otherPhotosUrls = document.querySelectorAll("#otherPhotosURLClass");
-
+    const otherPhotosUrls = document.querySelectorAll("#otherPhotosURLID");
+    console.log(otherPhotosUrls)
     otherPhotosUrls.forEach((url, index) => {
-        addPhotoFieldWithURL(url)
+        addPhotoFieldWithURL(url.value)
     });
 
     function addPhotoFieldWithURL(imageURL) {

@@ -21,8 +21,8 @@
                     {
                         foreach (var item in Model.OtherPhotosURL)
                         {
-                       
-                            <input type="hidden"  id="otherPhotosURLClass" name="otherPhotoURL" value="@item" />
+
+                            <input type="hidden" id="otherPhotosURLID" name="otherPhotoURL" value="@item" />
                         }
                     }
 
@@ -63,7 +63,7 @@
                                 <label class="btn btn-primary btn-file  m-0" style="width:45%;">
                                     <i></i>
                                     <!-- The file is stored here. -->
-                                    <input name="MainPhoto" type="file" id="MainPhotoInput" required>
+                                    <input asp-for="MainPhoto" name="MainPhoto" type="file" id="MainPhotoInput">
                                 </label>
                                 <button type="button" class="btn btn-primary" style="width:45%;">X</button>
                             </div>
