@@ -10,7 +10,10 @@ This project is an e-commerce website developed to enhance my skills and move fo
 ## Features
 
 - **CRUD Operations:** The system supports basic CRUD (Create, Read, Update, Delete) operations for managing various entities.
-
+- **User Authentication and Authorization (Cookie-based):** Implement robust user authentication to enhance system security. Utilize a cookie-based authentication system to securely manage user sessions. Define various user roles and permissions based on their responsibilities within the system. This ensures that users have appropriate access levels to different parts of the application. Employ secure authentication practices, such as encryption and secure cookie storage, to safeguard user credentials and session information. Implement mechanisms for user session management, including session timeout and logout functionality. Provide administrators with the ability to assign or modify roles and permissions as needed, allowing for flexible access control.
+- **Enhanced Docker:** Support Optimize Dockerfile and docker-compose files for seamless containerization.
+- **Complete Dynamic Photo Upload:** Develop a user interface for managing uploaded photos and implement best practices for secure photo storage.
+- **Strengthen Database Relationships:** Improve handling of related tables using ORM or database indexing strategies for enhanced performance.
 - **Onion Architecture:** The project is structured using the Onion Architecture, promoting a modular and scalable design. Layers include Core, Infrastructure, Application, and Presentation.
 
   ![image](https://github.com/isiksalihhh/Cantaoria/assets/147008088/b348c921-c4a9-42bd-89bf-69bebb80a658)
